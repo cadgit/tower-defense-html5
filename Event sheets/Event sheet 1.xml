@@ -1,0 +1,171 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<c2eventsheet>
+    <!--All the 'name' attributes are ignored by Construct 2 - they are there for readability only.-->
+    <name>Event sheet 1</name>
+    <events>
+        <variable constant="0" name="life" static="0" type="number">100</variable>
+        <event-block>
+            <conditions>
+                <condition id="-18" name="On created" type="player" />
+            </conditions>
+            <actions>
+                <action behavior="Pathfinding" id="0" name="Find path" type="player">
+                    <param id="0" name="X">1920</param>
+                    <param id="1" name="Y">1024</param>
+                </action>
+                <action id="11" name="Set collisions enabled" type="player">
+                    <param id="0" name="Collisions">1</param>
+                </action>
+            </actions>
+        </event-block>
+        <event-block>
+            <conditions>
+                <condition behavior="Pathfinding" id="0" name="On path found" type="player" />
+            </conditions>
+            <actions>
+                <action behavior="Pathfinding" id="1" name="Move along path" type="player" />
+                <action id="0" name="Set text" type="Log">
+                    <param id="0" name="Text">&quot;Camino Encontrado&quot;</param>
+                </action>
+            </actions>
+        </event-block>
+        <event-block>
+            <conditions>
+                <condition id="0" name="On click" type="Mouse">
+                    <param id="0" name="Mouse button">0</param>
+                    <param id="1" name="Click type">0</param>
+                </condition>
+            </conditions>
+            <actions>
+                <action id="-3" name="Create object" type="System">
+                    <param id="0" name="Object to create">torreta</param>
+                    <param id="1" name="Layer">1</param>
+                    <param id="2" name="X">Mouse.X</param>
+                    <param id="3" name="Y">Mouse.Y</param>
+                </action>
+                <action behavior="Pathfinding" id="4" name="Regenerate obstacle map" type="player" />
+                <action behavior="Pathfinding" id="2" name="Stop" type="player" />
+                <action behavior="Pathfinding" id="0" name="Find path" type="player">
+                    <param id="0" name="X">1920</param>
+                    <param id="1" name="Y">1024</param>
+                </action>
+            </actions>
+        </event-block>
+        <event-block>
+            <conditions>
+                <condition id="-6" name="Every X seconds" type="System">
+                    <param id="0" name="Interval (seconds)">0.75</param>
+                </condition>
+                <condition id="-11" name="For Each" type="System">
+                    <param id="0" name="Object">torreta</param>
+                </condition>
+                <condition id="-15" name="Pick nearest/furthest" type="player">
+                    <param id="0" name="Which">0</param>
+                    <param id="1" name="X">torreta.X</param>
+                    <param id="2" name="Y">torreta.Y</param>
+                </condition>
+                <condition id="-8" name="Compare two values" type="System">
+                    <param id="0" name="First value">distance(torreta.X, torreta.Y, player.X, player.Y)</param>
+                    <param id="1" name="Comparison">3</param>
+                    <param id="2" name="Second value">200</param>
+                </condition>
+            </conditions>
+            <actions>
+                <action id="0" name="Spawn another object" type="torreta">
+                    <param id="0" name="Object">bullet</param>
+                    <param id="1" name="Layer">1</param>
+                    <param id="2" name="Image point">0</param>
+                </action>
+            </actions>
+        </event-block>
+        <event-block>
+            <conditions>
+                <condition id="-1" name="Every tick" type="System" />
+                <condition id="-11" name="For Each" type="System">
+                    <param id="0" name="Object">torreta</param>
+                </condition>
+                <condition id="-15" name="Pick nearest/furthest" type="player">
+                    <param id="0" name="Which">0</param>
+                    <param id="1" name="X">torreta.X</param>
+                    <param id="2" name="Y">torreta.Y</param>
+                </condition>
+                <condition id="-8" name="Compare two values" type="System">
+                    <param id="0" name="First value">distance(torreta.X, torreta.Y, player.X, player.Y)</param>
+                    <param id="1" name="Comparison">3</param>
+                    <param id="2" name="Second value">200</param>
+                </condition>
+            </conditions>
+            <actions>
+                <action id="-21" name="Rotate toward position" type="torreta">
+                    <param id="0" name="Degrees">5</param>
+                    <param id="1" name="X">player.X</param>
+                    <param id="2" name="Y">player.Y</param>
+                </action>
+            </actions>
+        </event-block>
+        <event-block>
+            <conditions>
+                <condition behavior="Pathfinding" id="5" name="On arrived" type="player" />
+            </conditions>
+            <actions>
+                <action id="-11" name="Subtract from" type="System">
+                    <param id="0" name="Variable">life</param>
+                    <param id="1" name="Value">10</param>
+                </action>
+            </actions>
+        </event-block>
+        <event-block>
+            <conditions>
+                <condition id="0" name="On collision with another object" type="bullet">
+                    <param id="0" name="Object">player</param>
+                </condition>
+            </conditions>
+            <actions>
+                <action id="-9" name="Destroy" type="bullet" />
+                <action id="-12" name="Subtract from" type="player">
+                    <param id="0" name="Instance variable">life</param>
+                    <param id="1" name="Value">10</param>
+                </action>
+            </actions>
+        </event-block>
+        <event-block>
+            <conditions>
+                <condition id="-7" name="Compare instance variable" type="player">
+                    <param id="0" name="Instance variable">life</param>
+                    <param id="1" name="Comparison">3</param>
+                    <param id="2" name="Value">0</param>
+                </condition>
+            </conditions>
+            <actions>
+                <action id="-9" name="Destroy" type="player" />
+            </actions>
+        </event-block>
+        <event-block>
+            <conditions>
+                <condition id="-6" name="Every X seconds" type="System">
+                    <param id="0" name="Interval (seconds)">2</param>
+                </condition>
+            </conditions>
+            <actions>
+                <action id="-3" name="Create object" type="System">
+                    <param id="0" name="Object to create">player</param>
+                    <param id="1" name="Layer">1</param>
+                    <param id="2" name="X">0+ player.Width</param>
+                    <param id="3" name="Y">0 + player.Height</param>
+                </action>
+                <action id="-3" name="Create object" type="System">
+                    <param id="0" name="Object to create">player</param>
+                    <param id="1" name="Layer">1</param>
+                    <param id="2" name="X">0+ player.Width</param>
+                    <param id="3" name="Y">0 + player.Height</param>
+                </action>
+                <action id="-3" name="Create object" type="System">
+                    <param id="0" name="Object to create">player</param>
+                    <param id="1" name="Layer">1</param>
+                    <param id="2" name="X">0+ player.Width</param>
+                    <param id="3" name="Y">0 + player.Height</param>
+                </action>
+            </actions>
+        </event-block>
+    </events>
+</c2eventsheet>
